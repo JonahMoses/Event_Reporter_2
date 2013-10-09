@@ -39,5 +39,9 @@ class Registry
     end
   end
 
+  def count
+    attendees.count
+  end
+
 end
 
