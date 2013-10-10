@@ -5,10 +5,10 @@ class CommandRunnerTest < Minitest::Test
 
   def setup
     @cr = CommandRunner.new
+    cr.load('./test/fixtures/partial_attendees.csv')
   end
 
   def test_it_loads_a_csv_into_the_registry
-    cr.load('./test/fixtures/partial_attendees.csv')
     assert_equal 10, cr.attendee_count
   end
 
@@ -17,20 +17,17 @@ class CommandRunnerTest < Minitest::Test
   end
 
   def test_it_counts_a_loaded_queue
-    cr.load('./test/fixtures/partial_attendees.csv')
     cr.find_attendees_by_first_name("Sarah")
     assert_equal 2, cr.queue_count
   end
 
   def test_it_replaces_queued_items_on_a_second_find
-    cr.load('./test/fixtures/partial_attendees.csv')
     cr.find_attendees_by_first_name("Sarah")
     cr.find_attendees_by_first_name("Audrey")
     assert_equal 1, cr.queue_count
   end
 
   def test_it_replaces_and_finds_all_other_attributes
-    cr.load('./test/fixtures/partial_attendees.csv')
     cr.find_attendees_by_last_name("Nguyen")
     assert_equal 1, cr.queue_count
     cr.find_attendees_by_email("arannon@jumpstartlab.com")
@@ -45,6 +42,22 @@ class CommandRunnerTest < Minitest::Test
     assert_equal 2, cr.queue_count
     cr.find_attendees_by_zipcode("20010")
     assert_equal 1, cr.queue_count
+  end
+
+  def test_it_calls_queue_print
+    cr.find_attendees_by_first_name("Sarah")
+    assert cr.respond_to?(:queue_print)
+  end
+
+  def test_it_prints_the_number_of_lines_in_the_queue
+    skip
+    cr.find_attendees_by_first_name("Sarah")
+    assert_equal "SOME TEXT", cr.queue_print
+  end
+
+  def test_it_executes_the_queue_save_method
+    cr.find_attendees_by_first_name("Sarah")
+    assert cr.respond_to?(:queue_save), cr.queue_save("new_file")
   end
 
 end

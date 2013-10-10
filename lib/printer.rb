@@ -10,17 +10,6 @@ class Printer
     fields.collect do |attribute|
       attendee.send(attribute)
     end.join("  ")
-
-    # [
-    #   attendee.last_name,
-    #   attendee.first_name,
-    #   attendee.email,
-    #   attendee.zipcode,
-    #   attendee.city,
-    #   attendee.state,
-    #   attendee.street,
-    #   attendee.home_phone
-    # ].join("  ")
   end
 
   def formats_attendees(attendees)
