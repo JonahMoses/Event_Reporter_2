@@ -28,6 +28,7 @@ class CommandRunner
   def load(filename)
     parser.parse_file(filename)
     registry.attendees = parser.attendees
+    "Loaded #{registry.count} attendees."
   end
 
   def attendee_count
@@ -40,34 +41,42 @@ class CommandRunner
 
   def find_attendees_by_first_name(first_name)
     queue.replace(registry.find_all_by_first_name(first_name))
+    "Found #{queue.count} attendees by their first name."
   end
 
   def find_attendees_by_last_name(last_name)
     queue.replace(registry.find_all_by_last_name(last_name))
+    "Found #{queue.count} attendees by their last name."
   end
 
   def find_attendees_by_email(email)
     queue.replace(registry.find_all_by_email(email))
+    "Found #{queue.count} attendees by their email."
   end
 
   def find_attendees_by_home_phone(home_phone)
     queue.replace(registry.find_all_by_home_phone(home_phone))
+    "Found #{queue.count} attendees by their home phone."
   end
 
   def find_attendees_by_street(street)
     queue.replace(registry.find_all_by_street(street))
+    "Found #{queue.count} attendees by their street."
   end
 
   def find_attendees_by_city(city)
     queue.replace(registry.find_all_by_city(city))
+    "Found #{queue.count} attendees by their city."
   end
 
   def find_attendees_by_state(state)
     queue.replace(registry.find_all_by_state(state))
+    "Found #{queue.count} attendees by their state."
   end
 
   def find_attendees_by_zipcode(zipcode)
     queue.replace(registry.find_all_by_zipcode(zipcode))
+    "Found #{queue.count} attendees by their zipcode."
   end
 
   def queue_print

@@ -1,3 +1,5 @@
+require './lib/command_runner'
+
 class CommandInterpreter
   attr_reader :runner
 
@@ -6,7 +8,7 @@ class CommandInterpreter
   end
 
   def default_filename
-    "event_attendees.csv"
+    "./data/event_attendees.csv"
   end
 
   def run(command)
@@ -21,6 +23,8 @@ class CommandInterpreter
         run_help(parts[1..-1])
       when "find"
         run_find(parts[1..-1])
+      else
+        "Sorry, I don't know how to do #{command}"
     end
   end
 
@@ -55,9 +59,15 @@ class CommandInterpreter
   end
 
   def run_find(parts)
-    attribute = parts.shift
+    attribute = parts.first
     criteria  = parts.join(' ')
-    runner.send("find_#{attribute}", criteria)
+    if attribute.nil?
+      "Please specify what you're trying to find"
+    elsif criteria.nil?
+      "What is the criteria you are searching for?"
+    else
+      runner.send("find_attendees_by_#{attribute}", criteria)
+    end
   end
 
 end
